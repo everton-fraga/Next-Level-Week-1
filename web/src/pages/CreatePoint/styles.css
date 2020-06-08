@@ -163,6 +163,10 @@
 #page-create-point form button:hover {
   background: #2fb86e;
 }
+#page-create-point form button:disabled {
+  background: #9da09e;
+  cursor: wait;
+}
 
 .items-grid {
   display: grid;

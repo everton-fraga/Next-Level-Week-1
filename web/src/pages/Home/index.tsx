@@ -25,7 +25,6 @@ const Home = () => {
             <strong>Cadastre um ponto de coleta</strong>
           </Link>
         </main>
-        >
       </div>
     </div>
   );

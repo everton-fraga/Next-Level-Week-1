@@ -5,7 +5,7 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import api from '../../services/api';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import './styles.css';
 
@@ -39,7 +39,6 @@ const CreatePoint = () => {
     0,
     0,
   ]);
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -47,6 +46,8 @@ const CreatePoint = () => {
   });
 
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+
+  const [acessingapi, setAcessingapi] = useState(false);
 
   const history = useHistory();
 
@@ -133,6 +134,8 @@ const CreatePoint = () => {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
+    setAcessingapi(true);
+
     const { name, email, whatsapp } = formData;
     const uf = selectedUf;
     const city = selectedcity;
@@ -150,17 +153,15 @@ const CreatePoint = () => {
       items,
     };
 
-    //await api.post('points', data);
+    await api.post('points', data);
 
-    toast.success('teste');
-    // alert('Ponto de coleta cadastrado com sucesso!');
-
-    //history.push('/');
+    toast.success('Ponto de coleta cadastrado com sucesso!', {
+      onClose: () => history.push('/'),
+    });
   }
 
   return (
     <div id="page-create-point">
-      <ToastContainer autoClose={3000} />
       <header>
         <img src={logo} alt="Ecoleta" />
         <Link to="/">
@@ -168,7 +169,6 @@ const CreatePoint = () => {
           Voltar para home
         </Link>
       </header>
-
       <form onSubmit={handleSubmit}>
         <h1>
           Cadastro do <br /> ponto de coleta
@@ -278,7 +278,9 @@ const CreatePoint = () => {
           </ul>
         </fieldset>
 
-        <button type="submit">Cadastrar um ponto de coleta</button>
+        <button type="submit" disabled={acessingapi}>
+          Cadastrar um ponto de coleta
+        </button>
       </form>
     </div>
   );
