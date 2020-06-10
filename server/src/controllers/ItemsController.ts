@@ -10,6 +10,7 @@ class ItemsController {
         id: item.id,
         name: item.title,
         image_url: `http://localhost:3333/uploads/${item.image}`,
+        image_test_mobile: `http://192.168.0.39:3333/uploads/${item.image}`,
       };
     });
     return response.json(serializedItems);
